@@ -4,8 +4,6 @@ import android.app.ListActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import com.google.gson.GsonBuilder
-import com.squareup.okhttp.OkHttpClient
-import com.squareup.okhttp.Request
 import nl.mplatvoet.komponents.kovenant.android.demo.support.GithubDeserializer
 import nl.mplatvoet.komponents.kovenant.android.failUi
 import nl.mplatvoet.komponents.kovenant.android.successUi
@@ -25,17 +23,15 @@ val gsonParser by lazyPromise {
             .create()
 }
 
-val httpClient by lazyPromise { OkHttpClient() }
+val httpGetService by lazyPromise { HttpGetService() }
 
 public class GithubActivity : ListActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        httpClient thenUse {
-            val request = Request.Builder().url(url).build()
-            val response = newCall(request).execute()
-            response.body().string()
+        httpGetService thenUse {
+            textUrl(url)
         } and gsonParser then { tuple ->
             val (msg, parser) = tuple
             parser.fromJson(msg, javaClass<List<String>>())

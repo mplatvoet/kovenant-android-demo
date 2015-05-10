@@ -7,7 +7,7 @@ import java.lang.reflect.Type
 import java.util.ArrayList
 
 
-open class GithubDeserializer : JsonDeserializer<List<String>> {
+class GithubDeserializer : JsonDeserializer<List<String>> {
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): List<String> {
 
         val root = json.getAsJsonObject()
