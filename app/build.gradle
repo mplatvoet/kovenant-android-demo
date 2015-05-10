@@ -40,7 +40,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile 'org.jetbrains.anko:anko:0.6-15s'
-    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'net.sourceforge.argo:argo:3.14'
+
     compile 'nl.mplatvoet.komponents:kovenant-android:1.1.0'
     compile 'nl.mplatvoet.komponents:kovenant-combine:1.1.0'
 }
