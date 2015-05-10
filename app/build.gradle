@@ -42,5 +42,6 @@ dependencies {
     compile 'org.jetbrains.anko:anko:0.6-15s'
     compile 'com.squareup.okhttp:okhttp:2.3.0'
     compile 'com.google.code.gson:gson:2.3.1'
-    compile 'nl.mplatvoet.komponents:kovenant-android:1.0.0'
+//    compile 'nl.mplatvoet.komponents:kovenant-android:1.1.0'
+//    compile 'nl.mplatvoet.komponents:kovenant-combine:1.1.0'
 }
