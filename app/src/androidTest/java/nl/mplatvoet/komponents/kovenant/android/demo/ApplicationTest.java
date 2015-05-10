@@ -1,4 +1,4 @@
-package org.example.demo;
+package nl.mplatvoet.komponents.kovenant.android.demo;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
