@@ -1,14 +1,22 @@
 package nl.mplatvoet.komponents.kovenant.android.demo
 
+import android.app.Activity
 import android.app.ListActivity
+import android.database.DataSetObserver
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import nl.mplatvoet.komponents.kovenant.android.failUi
 import nl.mplatvoet.komponents.kovenant.android.successUi
 import nl.mplatvoet.komponents.kovenant.combine.and
 import nl.mplatvoet.komponents.kovenant.properties.lazyPromise
 import nl.mplatvoet.komponents.kovenant.then
 import nl.mplatvoet.komponents.kovenant.thenUse
+import org.jetbrains.anko.listView
+import org.jetbrains.anko.textView
 import org.jetbrains.anko.toast
 
 
@@ -24,7 +32,7 @@ So it's safe to call from the UI Thread.
 val searchParser by lazyPromise { GithubSearchJsonParser() }
 val httpGetService by lazyPromise { HttpGetService() }
 
-public class GithubActivity : ListActivity() {
+public class GithubActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,25 +44,37 @@ public class GithubActivity : ListActivity() {
             // `thenUse` keeps everything on background threads
             textUrl(url)
 
-        // use `and` to combine the result of the `textUrl` call
-        // with the lazy loaded searchParser
+            // use `and` to combine the result of the `textUrl` call
+            // with the lazy loaded searchParser
         } and searchParser then { tuple ->
             //now we can use the result and parser together
             val (msg, parser) = tuple
             parser.parse(msg)
-        } then {
-            // do a transformation from Item to String
-            it.items map { it.name }
         } successUi {
             // For the first time we are going to touch the UI
             // This is the only code operating on the UI thread.
-            val adapter = ArrayAdapter(this, R.layout.list_item, it)
-            setListAdapter(adapter)
+            result ->
+            addResultToView(result)
         } failUi {
 
             //If somewhere in the chain something went wrong
             toast("${it.getMessage()}")
         }
     }
+
+    private fun addResultToView(result: Result) {
+        listView {
+            setAdapter(ListAdapter(result.items) { (n, item, reusable : TextView?) ->
+                buildView(n, item, reusable)
+            })
+        }
+    }
+
+    private fun buildView(id: Int, item: Item, reusable: TextView?) : TextView {
+        val textView = reusable?:android.widget.TextView(this)
+        textView.setText(item.name)
+        return textView
+    }
+
 }
 
