@@ -3,21 +3,19 @@ package nl.mplatvoet.komponents.kovenant.android.demo
 import android.app.Activity
 import android.app.ListActivity
 import android.database.DataSetObserver
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
-import android.widget.ArrayAdapter
-import android.widget.TextView
+import android.widget.*
 import nl.mplatvoet.komponents.kovenant.android.failUi
 import nl.mplatvoet.komponents.kovenant.android.successUi
 import nl.mplatvoet.komponents.kovenant.combine.and
 import nl.mplatvoet.komponents.kovenant.properties.lazyPromise
 import nl.mplatvoet.komponents.kovenant.then
 import nl.mplatvoet.komponents.kovenant.thenUse
-import org.jetbrains.anko.listView
-import org.jetbrains.anko.textView
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
 
 
 val url = "https://api.github.com/search/repositories?q=android+language:kotlin&sort=updated&order=desc"
@@ -67,15 +65,50 @@ public class GithubActivity : Activity() {
             setAdapter(ListAdapter(
                     result.items,
                     { createView() },
-                    { view, id, item -> view.setText(item.name) }
+                    { view, id, item -> populateView(view, item) }
             ))
         }
     }
 
-    private fun createView(): TextView {
-        val textView = android.widget.TextView(this)
-        textView.setPadding(5,5, 5, 5)
-        return textView
+    val imageId = 1337
+    val textId = 1338
+
+    private fun populateView(view: View, item: Item) {
+        val textView = view.find<TextView>(textId)
+        textView.setText(item.name)
+
+        val imageView = view.find<ImageView>(imageId)
+
+        item.image then {
+            Bitmap.createScaledBitmap(it, dip(50), dip(50), false)
+        } successUi  {
+            imageView.setImageBitmap(it)
+        }
+
+    }
+
+    private fun createView(): View {
+        val main = android.widget.LinearLayout(this)
+        main.orientation = LinearLayout.HORIZONTAL
+        main.gravity = Gravity.LEFT
+
+
+        main.imageView {
+            id = imageId
+            padding = dip(2)
+            setMinimumHeight(dip(50))
+            setMinimumWidth(dip(50))
+        }
+
+        main.linearLayout {
+            orientation = LinearLayout.VERTICAL
+            textView {
+                padding = dip(5)
+                id = textId
+
+            }
+        }
+        return main
     }
 
 }
