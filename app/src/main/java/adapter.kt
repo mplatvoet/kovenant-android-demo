@@ -7,13 +7,19 @@ import android.widget.Adapter
 import java.util.concurrent.ConcurrentLinkedQueue
 
 public class ListAdapter<T, V : View>(private val items: List<T>,
-                                      private val viewFactory: (id: Int, item: T, reusable: V?) -> V) : ObservableAdapter() {
+                                      private val viewFactory: () -> V,
+                                      private val viewPopulator: (view: V, id: Int, item: T) -> Unit) : ObservableAdapter() {
 
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? = viewFactory(position, items[position], convertView as V?)
+    suppress("unchecked_cast")
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
+        val view: V = (convertView ?: viewFactory()) as V
+        viewPopulator(view, position, items[position])
+        return view
+    }
 
     override fun isEnabled(position: Int): Boolean = true
-    override fun areAllItemsEnabled(): Boolean =  true
+    override fun areAllItemsEnabled(): Boolean = true
     override fun isEmpty(): Boolean = items.isEmpty()
     override fun getItemViewType(position: Int): Int = Adapter.IGNORE_ITEM_VIEW_TYPE
     override fun getItem(position: Int): Any? = items[position]

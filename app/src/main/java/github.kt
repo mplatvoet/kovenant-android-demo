@@ -64,15 +64,17 @@ public class GithubActivity : Activity() {
 
     private fun addResultToView(result: Result) {
         listView {
-            setAdapter(ListAdapter(result.items) { (n, item, reusable : TextView?) ->
-                buildView(n, item, reusable)
-            })
+            setAdapter(ListAdapter(
+                    result.items,
+                    { createView() },
+                    { view, id, item -> view.setText(item.name) }
+            ))
         }
     }
 
-    private fun buildView(id: Int, item: Item, reusable: TextView?) : TextView {
-        val textView = reusable?:android.widget.TextView(this)
-        textView.setText(item.name)
+    private fun createView(): TextView {
+        val textView = android.widget.TextView(this)
+        textView.setPadding(5,5, 5, 5)
         return textView
     }
 
