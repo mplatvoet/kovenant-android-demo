@@ -16,10 +16,12 @@ class GithubSearchJsonParser {
         val items = ArrayList<Item>()
         rootNode.getArrayNode("items") forEach {
             val name = it.getStringValue("name")
+            val stars = it.getNumberValue("stargazers_count")
+            val forks = it.getNumberValue("forks")
             val owner = it.getNode("owner")
             val imageUrl = owner.getStringValue("avatar_url")
 
-            items add Item(name, imageUrl)
+            items add Item(name, imageUrl, forks = forks, stars = stars)
         }
         return Result(items)
     }
@@ -27,12 +29,7 @@ class GithubSearchJsonParser {
 
 data class Result(val items: List<Item>)
 
-data class Item(val name: String, imageUrl: String) {
-    companion object {
-        private val service = HttpGetService()
-    }
-
-    val image by lazyPromise {
-        service.bitmapUrl(imageUrl)
-    }
-}
+data class Item(val name: String,
+                val imageUrl: String,
+                val forks: String,
+                val stars: String)

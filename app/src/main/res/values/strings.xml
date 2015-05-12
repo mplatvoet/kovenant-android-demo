@@ -2,4 +2,6 @@
     <string name="app_name">Kovenant Demo</string>
 
     <string name="list_item.image.description">Github user icon</string>
+    <string name="list_item.stars.text">Stars</string>
+    <string name="list_item.forks.text">Forks</string>
 </resources>

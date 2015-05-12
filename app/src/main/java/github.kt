@@ -6,11 +6,13 @@ import android.content.Context
 import android.database.DataSetObserver
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.LruCache
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import nl.mplatvoet.komponents.kovenant.Promise
 import nl.mplatvoet.komponents.kovenant.android.failUi
 import nl.mplatvoet.komponents.kovenant.android.successUi
 import nl.mplatvoet.komponents.kovenant.combine.and
@@ -24,7 +26,7 @@ val url = "https://api.github.com/search/repositories?q=android+language:kotlin&
 
 
 /*
-Using a lazy promises.
+Using lazy promises.
 
 This promise gets initialized on a background thread upon first access.
 So it's safe to call from the UI Thread.
@@ -33,6 +35,8 @@ val searchParser by lazyPromise { GithubSearchJsonParser() }
 val httpGetService by lazyPromise { HttpGetService() }
 
 public class GithubActivity : Activity() {
+    val cache = LruCache<String, Promise<Bitmap, Exception>>(100)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,17 +76,31 @@ public class GithubActivity : Activity() {
     }
 
     private fun populateView(view: View, item: Item) {
-        val textView = view.find<TextView>(R.id.text)
-        textView.setText(item.name)
+        view.find<TextView>(R.id.text).text = item.name
+        view.find<TextView>(R.id.stars).text = item.stars
+        view.find<TextView>(R.id.forks).text = item.forks
 
         val imageView = view.find<ImageView>(R.id.image)
 
-        item.image then {
-            Bitmap.createScaledBitmap(it, dip(50), dip(50), false)
-        } successUi  {
+        item.bitmap() successUi  {
             imageView.setImageBitmap(it)
         }
 
+    }
+
+    private fun Item.bitmap(): Promise<Bitmap, Exception> {
+        val cached = cache.get(imageUrl)
+        if (cached != null) return cached
+
+        val promise = httpGetService thenUse {
+            bitmapUrl(imageUrl)
+        } then { bitmap ->
+            val scaled = Bitmap.createScaledBitmap(bitmap, dip(50), dip(50), false)
+            bitmap.recycle()
+            scaled
+        }
+        cache.put(imageUrl, promise)
+        return promise
     }
 
     private fun createView(parent: ViewGroup): View
