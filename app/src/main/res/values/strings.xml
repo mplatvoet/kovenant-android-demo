@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Kovenant Demo</string>
+
+    <string name="list_item.image.description">Github user icon</string>
 </resources>

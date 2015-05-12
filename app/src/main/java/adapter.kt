@@ -7,13 +7,13 @@ import android.widget.Adapter
 import java.util.concurrent.ConcurrentLinkedQueue
 
 public class ListAdapter<T, V : View>(private val items: List<T>,
-                                      private val viewFactory: () -> V,
+                                      private val viewFactory: (parent: ViewGroup) -> V,
                                       private val viewPopulator: (view: V, id: Int, item: T) -> Unit) : ObservableAdapter() {
 
 
     suppress("unchecked_cast")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
-        val view: V = (convertView ?: viewFactory()) as V
+        val view: V = (convertView ?: viewFactory(parent)) as V
         viewPopulator(view, position, items[position])
         return view
     }

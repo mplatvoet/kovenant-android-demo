@@ -2,10 +2,12 @@ package nl.mplatvoet.komponents.kovenant.android.demo
 
 import android.app.Activity
 import android.app.ListActivity
+import android.content.Context
 import android.database.DataSetObserver
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -34,7 +36,6 @@ public class GithubActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         // Use the lazyPromise HttpGetService.
         // So this gets initialized on a background thread now
         httpGetService thenUse {
@@ -64,20 +65,17 @@ public class GithubActivity : Activity() {
         listView {
             setAdapter(ListAdapter(
                     result.items,
-                    { createView() },
+                    { parent -> createView(parent) },
                     { view, id, item -> populateView(view, item) }
             ))
         }
     }
 
-    val imageId = 1337
-    val textId = 1338
-
     private fun populateView(view: View, item: Item) {
-        val textView = view.find<TextView>(textId)
+        val textView = view.find<TextView>(R.id.text)
         textView.setText(item.name)
 
-        val imageView = view.find<ImageView>(imageId)
+        val imageView = view.find<ImageView>(R.id.image)
 
         item.image then {
             Bitmap.createScaledBitmap(it, dip(50), dip(50), false)
@@ -87,29 +85,8 @@ public class GithubActivity : Activity() {
 
     }
 
-    private fun createView(): View {
-        val main = android.widget.LinearLayout(this)
-        main.orientation = LinearLayout.HORIZONTAL
-        main.gravity = Gravity.LEFT
-
-
-        main.imageView {
-            id = imageId
-            padding = dip(2)
-            setMinimumHeight(dip(50))
-            setMinimumWidth(dip(50))
-        }
-
-        main.linearLayout {
-            orientation = LinearLayout.VERTICAL
-            textView {
-                padding = dip(5)
-                id = textId
-
-            }
-        }
-        return main
-    }
+    private fun createView(parent: ViewGroup): View
+            = layoutInflater.inflate(R.layout.list_item, parent, false)
 
 }
 
