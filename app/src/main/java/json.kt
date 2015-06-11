@@ -2,7 +2,6 @@ package nl.mplatvoet.komponents.kovenant.android.demo
 
 import android.graphics.Bitmap
 import argo.jdom.JdomParser
-import nl.mplatvoet.komponents.kovenant.properties.lazyPromise
 import java.util.ArrayList
 
 class GithubSearchJsonParser {

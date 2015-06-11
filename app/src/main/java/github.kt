@@ -12,13 +12,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import nl.mplatvoet.komponents.kovenant.Promise
-import nl.mplatvoet.komponents.kovenant.android.failUi
-import nl.mplatvoet.komponents.kovenant.android.successUi
-import nl.mplatvoet.komponents.kovenant.combine.and
-import nl.mplatvoet.komponents.kovenant.properties.lazyPromise
-import nl.mplatvoet.komponents.kovenant.then
-import nl.mplatvoet.komponents.kovenant.thenUse
+import nl.komponents.kovenant.Promise
+import nl.komponents.kovenant.android.failUi
+import nl.komponents.kovenant.android.successUi
+import nl.komponents.kovenant.combine.and
+import nl.komponents.kovenant.properties.lazyPromise
+import nl.komponents.kovenant.then
+import nl.komponents.kovenant.thenUse
 import org.jetbrains.anko.*
 
 

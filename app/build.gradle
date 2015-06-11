@@ -1,7 +1,9 @@
 buildscript {
-    ext.kotlin_version = '0.11.91.2'
+    ext.kotlin_version = '0.12.412'
     repositories {
-        jcenter()
+        jcenter {
+            url "http://jcenter.bintray.com/"
+        }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -39,9 +41,9 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'org.jetbrains.anko:anko:0.6-15s'
+    compile 'org.jetbrains.anko:anko:0.6.2-15s'
     compile 'net.sourceforge.argo:argo:3.14'
 
-    compile 'nl.mplatvoet.komponents:kovenant-android:1.1.0'
-    compile 'nl.mplatvoet.komponents:kovenant-combine:1.1.0'
+    compile 'nl.komponents.kovenant:kovenant-android:2.0.0'
+    compile 'nl.komponents.kovenant:kovenant-combine:2.0.0'
 }

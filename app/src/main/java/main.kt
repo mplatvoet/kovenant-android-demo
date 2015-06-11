@@ -2,8 +2,8 @@ package nl.mplatvoet.komponents.kovenant.android.demo
 
 import android.app.Activity
 import android.os.Bundle
-import nl.mplatvoet.komponents.kovenant.android.startKovenant
-import nl.mplatvoet.komponents.kovenant.android.stopKovenant
+import nl.komponents.kovenant.android.startKovenant
+import nl.komponents.kovenant.android.stopKovenant
 import org.jetbrains.anko.*
 
 class MainActivity : Activity() {
