@@ -7,5 +7,5 @@ displays them in most recently updated order.
 
 Also uses [Anko](https://github.com/JetBrains/anko)
 
-Demo version uses Kovenant 2.0.0
+Demo version uses Kovenant 2.1.0
 
