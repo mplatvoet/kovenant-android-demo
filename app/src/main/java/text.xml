@@ -1,0 +1,339 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <cx:header name="Content-Type" value="text/html" />
+    <cx:let name="ct" value="$response" invoke="headerForKey:" arg0="content-type">
+        <!-- <meta http-equiv="Content-Type" content="<cx:write value="$ct">"/> -->
+    </cx:let>
+    <link rel= File-List href="candidateResume_files/filelist.xml">
+        <title>
+            <cx:write value="CV" invoke="localizedString" language="$language" />
+            -<cx:Write value=$activity.toEmployee.firstName/>
+        </title>
+        <style>
+            @font-face {
+            font-family: "FrutigerNeueRegular";
+            font-weight: bold;
+            src:
+            url("https://www.mirabeau.nl/static//fonts/62057895-1f9e-4d70-bd1a-65751a20a878.eot?#iefix");
+            src:
+            url("https://www.mirabeau.nl/static//fonts/62057895-1f9e-4d70-bd1a-65751a20a878.eot?#iefix")
+            format("eot"),
+            url("https://www.mirabeau.nl/static//fonts/7875f3d5-b62b-445c-8c9e-d65da1514e9d.woff")
+            format("woff"),
+            url("https://www.mirabeau.nl/static//fonts/1c242f4e-0c64-47cc-8cbc-e53d949280ba.ttf")
+            format("truetype"),
+            url("https://www.mirabeau.nl/static//fonts/ec132df9-012a-4594-bbd9-c86574bee7b0.svg#ec132df9-012a-4594-bbd9-c86574bee7b0")
+            format("svg")
+            }
+            * {
+            box-sizing: border-box;
+            }
+            body {
+            font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD",
+            Georgia,serif;
+            font-size: 14px;
+            line-height: 1.5;
+            background: #fff;
+            color: #333;
+            }
+            td {
+            vertical-align: top;
+            }
+            .facts .profile-pic {
+            display: block;
+            width: 120px;
+            height: 120px;
+            border-radius: 100%;
+            background-position: 50% 0;
+            background-repeat: no-repeat;
+            background-size: cover;
+            filter: url("data:image/svg+xml;utf8,
+            <svg xmlns='http://www.w3.org/2000/svg'><filter id…0.3333 0 0 0.3333 0.3333 0.3333 0 0 0
+                0 0 1 0'/>
+            </filter>
+        </svg>
+        #grayscale");
+        filter: gray;
+        -webkit-filter: grayscale(100%);
+        margin: 0 auto 20px;
+        }
+        .facts h3 {
+        font-family: "FrutigerNeueRegular", helvetica, arial, sans-serif;
+        display: block;
+        margin: 0 0 6px 0;
+        color: #909090;
+        font-size: 15px;
+        text-transform: uppercase;
+        font-weight: bold;
+        text-align: center;
+        }
+        .facts .name {
+        display: block;
+        margin: 0 0 12px 0;
+        color: #202020;
+        font-size: 18px;
+        font-style: italic;
+        text-align: center;
+        margin-bottom: 12px;
+        }
+        .facts .author-line {
+        display: block;
+        width: 60%;
+        border-top: 1px solid #dddddd;
+        width: 20%;
+        margin: 0 auto 25px;
+        }
+        .facts dt {
+        float: left;
+        clear: left;
+        width: 50%;
+        text-align: right;
+        font-weight: bold;
+        padding-right: 10px;
+        }
+        .facts dd {
+        float: left;
+        width: 50%;
+        text-align: left;
+        margin: 0;
+        padding-left: 10px;
+        }
+        .details h2 {
+        font-size: 24px;
+        margin: 20px 0 0;
+        font-style: italic;
+        font-weight: normal;
+        }
+        .details h2 + p {
+        margin-top: 0;
+        }
+        .details th {
+        padding-right: 25px;
+        text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="10" align="center">
+        <tr>
+            <td width="40%" class="facts">
+                <div class="profile-pic"
+                    style="background-image: url(http://www.shockmd.com/wp-content/istock_000005216903xsmall.jpg);"></div>
+                <h3><cx:Write value=$activity.toEmployee.toUser.jobTitle invoke="localizedString"/>
+                </h3>
+                <cx:if condition="$activity.toEmployee.formalName!=NIL">
+                    <p class="name"><cx:Write value=$activity.toEmployee.firstName
+                        invoke="localizedString"/>
+                    </p>
+                </cx:if>
+                <span class="author-line"></span>
+                <dl>
+                    <cx:if condition="$activity.toEmployee.formalName!=NIL">
+                        <dt>Geboortejaar</dt>
+                        <dd><cx:Write value=$activity.toEmployee.birthYear/>
+                        </dd>
+                    </cx:if>
+                    <cx:if condition="$activity.toEmployee.toUser.toGenderNode.value!='Onbekend'">
+                        <dt>Geslacht</dt>
+                        <dd><cx:Write value=$activity.toEmployee.toUser.toGenderNode.value
+                            invoke="localizedString"/>
+                        </dd>
+                    </cx:if>
+                    <dt>Rijbewijs</dt>
+                    <dd>(nog) geen variabele beschikbaar</dd>
+                    <cx:if condition="$activity.toEmployee.toExperienceNode.value!=NIL">
+                        <dt>Werkervaring</dt>
+                        <dd><cx:Write value=$activity.toEmployee.toExperienceNode.value
+                            invoke="localizedString"/> jaar
+                        </dd>
+                    </cx:if>
+                    <cx:if condition="$activity.toEmployee.availableDate!=NIL">
+                        <dt>Beschikbaar</dt>
+                        <dd><cx:Write value=$activity.toEmployee.toUser.toCompany.name
+                            invoke="localizedString"/>
+                        </dd>
+                    </cx:if>
+                </dl>
+            </td>
+            <td width="60%" class="details">
+
+                <cx:if condition="activity.toEmployee.toEmployeeExt.ambition !=nil">
+                    <h2 style="margin-top: 0;">Motivatie</h2>
+                    <p>
+                        <cx:Write value="$activity.toEmployee.ambition.htmlString"
+                            invoke="localizedString" html="1" />
+                    </p>
+                </cx:if>
+
+                <cx:if condition="activity.toEmployee.workHistories.count > 0">
+                    <h2>Werkervaring</h2>
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <cx:foreach item="work"
+                            list="$activity.toEmployee.workHistories.@sortDescending.endDate">
+                            <cx:if condition="work.endDate  = nil">
+                                <tr>
+                                    <th>
+                                        <cx:Write value="$work.startDate" dateformat="%m/%Y" />
+                                        -
+                                        <cx:write value="heden" invoke="localizedString" />
+                                    </th>
+                                    <td>
+                                        <cx:if condition="work.function  !=nil">
+                                            <strong>
+                                                <cx:Write value="$work.function" html="1"
+                                                    invoke="localizedString" />
+                                            </strong>
+                                            <br />
+                                        </cx:if>
+                                        <i>
+                                            <cx:if condition="work.employer  !=nil">
+                                                <cx:Write value="$work.employer" html="1"
+                                                    invoke="localizedString" />
+                                            </cx:if>
+
+                                            <cx:if condition="work.workLocation  !=nil">-
+                                                <cx:Write value="$work.workLocation" html="1"
+                                                    invoke="localizedString" />
+                                            </cx:if>
+                                        </i>
+                                        <br />
+                                        <br />
+                                        <cx:if condition="work.info  !=nil">
+                                            <cx:Write value="$work.info.htmlString" html="1"
+                                                invoke="localizedString" />
+                                            <br />
+                                        </cx:if>
+                                    </td>
+                                </tr>
+                            </cx:if>
+                        </cx:foreach>
+                        <cx:foreach item="work"
+                            list="$activity.toEmployee.workHistories.@sortDescending.endDate">
+                            <cx:if condition="work.endDate != nil">
+                                <tr>
+                                    <th>
+                                        <cx:Write value="$work.startDate" dateformat="%m/%Y" />
+                                        -
+                                        <cx:write value="$work.endDate" dateformat="%m/%Y" />
+                                    </th>
+                                    <td>
+                                        <cx:if condition="work.function  !=nil">
+                                            <strong>
+                                                <cx:Write value="$work.function" html="1"
+                                                    invoke="localizedString" />
+                                            </strong>
+                                            <br />
+                                        </cx:if>
+                                        <i>
+                                            <cx:if condition="work.employer  !=nil">
+                                                <cx:Write value="$work.employer" html="1"
+                                                    invoke="localizedString" />
+                                            </cx:if>
+
+                                            <cx:if condition="work.workLocation  !=nil">-
+                                                <cx:Write value="$work.workLocation" html="1"
+                                                    invoke="localizedString" />
+                                            </cx:if>
+                                        </i>
+                                        <br />
+                                        <br />
+                                        <cx:if condition="work.info  !=nil">
+                                            <cx:Write value="$work.info.htmlString" html="1"
+                                                invoke="localizedString" />
+                                            <br />
+                                        </cx:if>
+                                    </td>
+                                </tr>
+                            </cx:if>
+                        </cx:foreach>
+                    </table>
+                </cx:if>
+                <h2>Skills</h2>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <th>(nog) geen variabelen beschikbaar</th>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <th>Technieken</th>
+                        <td>Beschrijving</td>
+                    </tr>
+                    <tr>
+                        <th>Tools</th>
+                        <td>Beschrijving</td>
+                    </tr>
+                    <tr>
+                        <th>Methodieken</th>
+                        <td>Beschrijving</td>
+                    </tr>
+                    <tr>
+                        <th>Talen</th>
+                        <td>Niveau</td>
+                    </tr>
+                </table>
+                <h2>Opleiding</h2>
+                <cx:if condition="activity.toEmployee.educations.count > 0">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <cx:foreach item="edu"
+                            list="$activity.toEmployee.educations.@sortDescending.endDate">
+                            <tr>
+                                <th>
+                                    <cx:Write value="$edu.startDate" dateformat="%Y" />
+                                    -
+                                    <cx:Write value="$edu.endDate" dateformat="%Y" />
+                                </th>
+                                <td>
+                                    <cx:if condition="edu.showLevel1 > 0">
+                                        <cx:Write value="$edu.toLevel1Education1.value"
+                                            invoke="localizedString" />
+                                    </cx:if>
+
+                                    <cx:if condition="edu.showLevel2 > 0">
+                                        <cx:Write value="$edu.toLevel1Education2.value"
+                                            invoke="localizedString" />
+                                    </cx:if>
+
+                                    <cx:if condition="edu.showLevel3 > 0">
+                                        <cx:Write value="$edu.toLevel1Education3.value"
+                                            invoke="localizedString" />
+                                    </cx:if>
+
+
+                                    <cx:if condition="edu.hasCertificate = 0">
+                                        <cx:Write value="studerend" invoke="localizedString" />
+                                    </cx:if>
+
+                                    <cx:if condition="edu.hasCertificate = 1">
+                                        <cx:Write value="diploma" invoke="localizedString" />
+                                    </cx:if>
+
+                                    <cx:if condition="edu.hasCertificate  = 2">
+                                        <cx:Write value="afgebroken" invoke="localizedString" />
+                                    </cx:if>
+
+                                    <cx:if condition="edu.institute != nil">
+                                        <br />
+                                        <cx:Write value="$edu.institute.htmlString" html="1"
+                                            invoke="localizedString" />
+                                    </cx:if>
+                                </td>
+                            </tr>
+                        </cx:foreach>
+                    </table>
+                </cx:if>
+                <h2>Relevante nevenactiviteiten</h2>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <th>(nog) geen variabelen beschikbaar</th>
+                        <td>-</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

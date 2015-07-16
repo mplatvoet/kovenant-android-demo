@@ -82,7 +82,7 @@ public class GithubActivity : Activity() {
 
         val imageView = view.find<ImageView>(R.id.image)
 
-        item.bitmap() successUi  {
+        item.bitmap() successUi {
             imageView.setImageBitmap(it)
         }
 
