@@ -2,39 +2,40 @@ package nl.mplatvoet.komponents.kovenant.android.demo
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import java.io.BufferedInputStream
-import java.io.ByteArrayOutputStream
-import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.URL
+import android.os.Looper
+import fuel.Fuel
+import fuel.core.*
+import nl.komponents.kovenant.Promise
+import nl.komponents.kovenant.deferred
+import nl.komponents.kovenant.then
+import java.io.ByteArrayInputStream
 
-
-public class HttpGetService {
-    public fun textUrl(url: String): String {
-        val sb = StringBuilder()
-        val streamed = stream(url) {
-            it.reader() forEachLine { line -> sb.append(line) }
+public class FuelHttpService {
+    public fun textUrl(url: String, parameters: Map<String, Any?>? = null): Promise<String, Exception> {
+        return Fuel.get(url, parameters).promise() then {
+            val (response, array) = it
+            //should get encoding from the response.
+            String(array, "UTF-8")
         }
-        return if (streamed) sb.toString() else ""
     }
 
-    public fun bitmapUrl(url: String): Bitmap {
-        stream(url) {
-            return BitmapFactory.decodeStream(it)
+    public fun bitmapUrl(url: String): Promise<Bitmap, Exception> {
+        return Fuel.get(url).promise() then {
+            BitmapFactory.decodeStream(ByteArrayInputStream(it.second))
         }
-        throw Exception("could not load $url")
-    }
-
-    private inline fun stream(url: String, fn: (BufferedInputStream) -> Unit): Boolean {
-        val conn = URL(url).openConnection() as HttpURLConnection
-        try {
-            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                BufferedInputStream(conn.getInputStream()) use { fn(it) }
-                return true
-            }
-        } finally {
-            conn.disconnect();
-        }
-        return false
     }
 }
+
+
+public fun Request.promise(): Promise<Pair<Response, ByteArray>, Exception> {
+    val deferred = deferred<Pair<Response, ByteArray>, Exception>()
+    response { request, response, either ->
+        when (either) {
+            is Left<*, *> -> deferred.reject(either.get())
+            is Right<*, *> -> deferred.resolve(Pair(response, either.get()))
+        }
+    }
+    return deferred.promise
+}
+
+

@@ -16,13 +16,14 @@ import nl.komponents.kovenant.Promise
 import nl.komponents.kovenant.android.failUi
 import nl.komponents.kovenant.android.successUi
 import nl.komponents.kovenant.combine.and
+import nl.komponents.kovenant.functional.unwrap
 import nl.komponents.kovenant.properties.lazyPromise
 import nl.komponents.kovenant.then
 import nl.komponents.kovenant.thenUse
 import org.jetbrains.anko.*
 
 
-val url = "https://api.github.com/search/repositories?q=android+language:kotlin&sort=updated&order=desc"
+val url = "https://api.github.com/search/repositories"
 
 
 /*
@@ -32,7 +33,7 @@ This promise gets initialized on a background thread upon first access.
 So it's safe to call from the UI Thread.
  */
 val searchParser by lazyPromise { GithubSearchJsonParser() }
-val httpGetService by lazyPromise { HttpGetService() }
+val fuelService by lazyPromise { FuelHttpService() }
 
 public class GithubActivity : Activity() {
     val cache = LruCache<String, Promise<Bitmap, Exception>>(100)
@@ -42,14 +43,18 @@ public class GithubActivity : Activity() {
         super.onCreate(savedInstanceState)
         // Use the lazyPromise HttpGetService.
         // So this gets initialized on a background thread now
-        httpGetService thenUse {
+        val result = fuelService thenUse {
             // use the service and retrieve the url
             // `thenUse` keeps everything on background threads
-            textUrl(url)
+            textUrl(url, mapOf(
+                    "q" to "android language:kotlin",
+                    "sort" to "updated",
+                    "order" to "desc"))
+        }
 
-            // use `and` to combine the result of the `textUrl` call
-            // with the lazy loaded searchParser
-        } and searchParser then { tuple ->
+        // use `and` to combine the result of the `textUrl` call
+        // with the lazy loaded searchParser
+        result.unwrap() and searchParser then { tuple ->
             //now we can use the result and parser together
             val (msg, parser) = tuple
             parser.parse(msg)
@@ -92,9 +97,11 @@ public class GithubActivity : Activity() {
         val cached = cache.get(imageUrl)
         if (cached != null) return cached
 
-        val promise = httpGetService thenUse {
+        val result = fuelService thenUse {
             bitmapUrl(imageUrl)
-        } then { bitmap ->
+        }
+
+        val promise = result.unwrap() then { bitmap ->
             val scaled = Bitmap.createScaledBitmap(bitmap, dip(50), dip(50), false)
             bitmap.recycle()
             scaled

@@ -2,8 +2,12 @@ package nl.mplatvoet.komponents.kovenant.android.demo
 
 import android.app.Activity
 import android.os.Bundle
+import fuel.core.Manager
+import nl.komponents.kovenant.Kovenant
 import nl.komponents.kovenant.android.startKovenant
 import nl.komponents.kovenant.android.stopKovenant
+import nl.komponents.kovenant.jvm.asExecutor
+import nl.komponents.kovenant.jvm.asExecutorService
 import org.jetbrains.anko.*
 
 class MainActivity : Activity() {
@@ -17,6 +21,10 @@ class MainActivity : Activity() {
         // `Kovenant.configure { }` if you want to keep
         // matters in hand.
         startKovenant()
+
+        //Attach Kovenant's executors to Fuel's executors
+        Manager.instance.executor = Kovenant.context.workerContext.dispatcher.asExecutorService()
+        Manager.instance.callbackExecutor = Kovenant.context.callbackContext.dispatcher.asExecutorService()
 
         verticalLayout {
             padding = dip(32)
