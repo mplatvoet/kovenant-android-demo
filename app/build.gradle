@@ -44,10 +44,10 @@ dependencies {
     compile 'org.jetbrains.anko:anko:0.6.2-15s'
     compile 'net.sourceforge.argo:argo:3.14'
 
-    compile 'nl.komponents.kovenant:kovenant-android:2.3.3'
-    compile 'nl.komponents.kovenant:kovenant-combine:2.3.3'
-    compile 'nl.komponents.kovenant:kovenant-jvm:2.3.3'
-    compile 'nl.komponents.kovenant:kovenant-functional:2.3.3'
+    compile 'nl.komponents.kovenant:kovenant-android:2.4.0'
+    compile 'nl.komponents.kovenant:kovenant-combine:2.4.0'
+    compile 'nl.komponents.kovenant:kovenant-jvm:2.4.0'
+    compile 'nl.komponents.kovenant:kovenant-functional:2.4.0'
 
     compile 'fuel:fuel:0.52'
 }
