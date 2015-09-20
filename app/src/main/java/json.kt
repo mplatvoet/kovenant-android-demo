@@ -1,6 +1,5 @@
 package nl.mplatvoet.komponents.kovenant.android.demo
 
-import android.graphics.Bitmap
 import argo.jdom.JdomParser
 import java.util.ArrayList
 

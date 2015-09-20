@@ -6,7 +6,6 @@ import fuel.core.Manager
 import nl.komponents.kovenant.Kovenant
 import nl.komponents.kovenant.android.startKovenant
 import nl.komponents.kovenant.android.stopKovenant
-import nl.komponents.kovenant.jvm.asExecutor
 import nl.komponents.kovenant.jvm.asExecutorService
 import org.jetbrains.anko.*
 

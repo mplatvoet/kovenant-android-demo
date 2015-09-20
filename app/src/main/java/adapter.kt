@@ -11,7 +11,7 @@ public class ListAdapter<T, V : View>(private val items: List<T>,
                                       private val viewPopulator: (view: V, id: Int, item: T) -> Unit) : ObservableAdapter() {
 
 
-    suppress("unchecked_cast")
+    @Suppress("unchecked_cast")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
         val view: V = (convertView ?: viewFactory(parent)) as V
         viewPopulator(view, position, items[position])

@@ -13,13 +13,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import nl.komponents.kovenant.Promise
-import nl.komponents.kovenant.android.failUi
-import nl.komponents.kovenant.android.successUi
 import nl.komponents.kovenant.combine.and
 import nl.komponents.kovenant.functional.unwrap
 import nl.komponents.kovenant.properties.lazyPromise
 import nl.komponents.kovenant.then
 import nl.komponents.kovenant.thenUse
+import nl.komponents.kovenant.ui.failUi
+import nl.komponents.kovenant.ui.successUi
 import org.jetbrains.anko.*
 
 

@@ -2,7 +2,6 @@ package nl.mplatvoet.komponents.kovenant.android.demo
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.os.Looper
 import fuel.Fuel
 import fuel.core.*
 import nl.komponents.kovenant.Promise
@@ -31,8 +30,8 @@ public fun Request.promise(): Promise<Pair<Response, ByteArray>, Exception> {
     val deferred = deferred<Pair<Response, ByteArray>, Exception>()
     response { request, response, either ->
         when (either) {
-            is Left<*, *> -> deferred.reject(either.get())
-            is Right<*, *> -> deferred.resolve(Pair(response, either.get()))
+            is Either.Left -> deferred.reject(either.get())
+            is Either.Right -> deferred.resolve(Pair(response, either.get()))
         }
     }
     return deferred.promise
