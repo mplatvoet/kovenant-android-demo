@@ -10,7 +10,7 @@ import nl.komponents.kovenant.then
 import java.io.ByteArrayInputStream
 
 public class FuelHttpService {
-    public fun textUrl(url: String, parameters: Map<String, Any?>? = null): Promise<String, Exception> {
+    public fun textUrl(url: String, parameters: List<Pair<String, Any?>>? = null): Promise<String, Exception> {
         return Fuel.get(url, parameters).promise() then {
             val (response, array) = it
             //should get encoding from the response.

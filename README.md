@@ -11,5 +11,5 @@ Also uses:
 - [Fuel](https://github.com/kittinunf/Fuel)
 
 
-Demo version uses Kovenant 2.5.0
+Demo version uses Kovenant 2.6.0
 

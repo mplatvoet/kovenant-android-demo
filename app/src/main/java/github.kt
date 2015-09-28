@@ -46,7 +46,7 @@ public class GithubActivity : Activity() {
         val result = fuelService thenUse {
             // use the service and retrieve the url
             // `thenUse` keeps everything on background threads
-            textUrl(url, mapOf(
+            textUrl(url, listOf(
                     "q" to "android language:kotlin",
                     "sort" to "updated",
                     "order" to "desc"))

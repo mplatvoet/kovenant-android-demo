@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '0.13.1513'
+    ext.kotlin_version = '0.13.1514'
     repositories {
         jcenter {
             url "http://jcenter.bintray.com/"
@@ -44,10 +44,10 @@ dependencies {
     compile 'org.jetbrains.anko:anko-sdk23:0.7'
     compile 'net.sourceforge.argo:argo:3.14'
 
-    compile 'nl.komponents.kovenant:kovenant-android:2.5.0'
-    compile 'nl.komponents.kovenant:kovenant-combine:2.5.0'
-    compile 'nl.komponents.kovenant:kovenant-jvm:2.5.0'
-    compile 'nl.komponents.kovenant:kovenant-functional:2.5.0'
+    compile 'nl.komponents.kovenant:kovenant-android:2.6.0'
+    compile 'nl.komponents.kovenant:kovenant-combine:2.6.0'
+    compile 'nl.komponents.kovenant:kovenant-jvm:2.6.0'
+    compile 'nl.komponents.kovenant:kovenant-functional:2.6.0'
 
-    compile 'fuel:fuel:0.53'
+    compile 'fuel:fuel:0.54'
 }
