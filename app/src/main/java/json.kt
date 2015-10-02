@@ -1,7 +1,7 @@
 package nl.mplatvoet.komponents.kovenant.android.demo
 
 import argo.jdom.JdomParser
-import java.util.ArrayList
+import java.util.*
 
 class GithubSearchJsonParser {
     companion object {

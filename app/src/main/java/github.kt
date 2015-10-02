@@ -1,63 +1,46 @@
 package nl.mplatvoet.komponents.kovenant.android.demo
 
 import android.app.Activity
-import android.app.ListActivity
-import android.content.Context
-import android.database.DataSetObserver
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.LruCache
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.TextView
 import nl.komponents.kovenant.Promise
-import nl.komponents.kovenant.combine.and
-import nl.komponents.kovenant.functional.unwrap
-import nl.komponents.kovenant.properties.lazyPromise
 import nl.komponents.kovenant.then
-import nl.komponents.kovenant.thenUse
 import nl.komponents.kovenant.ui.failUi
 import nl.komponents.kovenant.ui.successUi
-import org.jetbrains.anko.*
+import org.jetbrains.anko.dip
+import org.jetbrains.anko.find
+import org.jetbrains.anko.listView
+import org.jetbrains.anko.toast
+import uy.kohesive.injekt.injectLazy
 
 
 val url = "https://api.github.com/search/repositories"
 
 
-/*
-Using lazy promises.
-
-This promise gets initialized on a background thread upon first access.
-So it's safe to call from the UI Thread.
- */
-val searchParser by lazyPromise { GithubSearchJsonParser() }
-val fuelService by lazyPromise { FuelHttpService() }
-
 public class GithubActivity : Activity() {
+    val searchParser: GithubSearchJsonParser by injectLazy()
+    val fuelService: FuelHttpService by injectLazy()
+
     val cache = LruCache<String, Promise<Bitmap, Exception>>(100)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Use the lazyPromise HttpGetService.
-        // So this gets initialized on a background thread now
-        val result = fuelService thenUse {
-            // use the service and retrieve the url
-            // `thenUse` keeps everything on background threads
-            textUrl(url, listOf(
-                    "q" to "android language:kotlin",
-                    "sort" to "updated",
-                    "order" to "desc"))
-        }
 
-        // use `and` to combine the result of the `textUrl` call
-        // with the lazy loaded searchParser
-        result.unwrap() and searchParser then { tuple ->
-            //now we can use the result and parser together
-            val (msg, parser) = tuple
-            parser.parse(msg)
+        // returns a promise
+        val resultPromise = fuelService.textUrl(url, listOf(
+                "q" to "android language:kotlin",
+                "sort" to "updated",
+                "order" to "desc"))
+
+        // parse the results and display them
+        resultPromise.then { msg ->
+            searchParser.parse(msg)
         } successUi {
             // For the first time we are going to touch the UI
             // This is the only code operating on the UI thread.
@@ -72,11 +55,11 @@ public class GithubActivity : Activity() {
 
     private fun addResultToView(result: Result) {
         listView {
-            setAdapter(ListAdapter(
+            adapter = ListAdapter(
                     result.items,
                     { parent -> createView(parent) },
                     { view, id, item -> populateView(view, item) }
-            ))
+            )
         }
     }
 
@@ -97,11 +80,7 @@ public class GithubActivity : Activity() {
         val cached = cache.get(imageUrl)
         if (cached != null) return cached
 
-        val result = fuelService thenUse {
-            bitmapUrl(imageUrl)
-        }
-
-        val promise = result.unwrap() then { bitmap ->
+        val promise = fuelService.bitmapUrl(imageUrl) then { bitmap ->
             val scaled = Bitmap.createScaledBitmap(bitmap, dip(50), dip(50), false)
             bitmap.recycle()
             scaled

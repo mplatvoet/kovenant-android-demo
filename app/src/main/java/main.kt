@@ -8,8 +8,18 @@ import nl.komponents.kovenant.android.startKovenant
 import nl.komponents.kovenant.android.stopKovenant
 import nl.komponents.kovenant.jvm.asExecutorService
 import org.jetbrains.anko.*
+import uy.kohesive.injekt.InjektMain
+import uy.kohesive.injekt.api.InjektRegistrar
+import uy.kohesive.injekt.api.addSingleton
 
 class MainActivity : Activity() {
+
+    companion object : InjektMain() {
+        override fun InjektRegistrar.registerInjectables() {
+            addSingleton(GithubSearchJsonParser())
+            addSingleton(FuelHttpService())
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

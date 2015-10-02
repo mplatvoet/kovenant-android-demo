@@ -9,7 +9,8 @@ Also uses:
 
 - [Anko](https://github.com/JetBrains/anko)
 - [Fuel](https://github.com/kittinunf/Fuel)
+- [Injekt](https://github.com/kohesive/injekt)
 
 
-Demo version uses Kovenant 2.6.0
+Demo version uses Kovenant 2.7.0
 
