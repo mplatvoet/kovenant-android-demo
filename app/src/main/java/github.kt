@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import nl.komponents.kovenant.Promise
+import nl.komponents.kovenant.functional.unwrap
+import nl.komponents.kovenant.jvm.Throttle
 import nl.komponents.kovenant.then
 import nl.komponents.kovenant.ui.failUi
 import nl.komponents.kovenant.ui.successUi
@@ -25,6 +27,7 @@ val url = "https://api.github.com/search/repositories"
 public class GithubActivity : Activity() {
     val searchParser: GithubSearchJsonParser by injectLazy()
     val fuelService: FuelHttpService by injectLazy()
+    val imageThrottle = Throttle()
 
     val cache = LruCache<String, Promise<Bitmap, Exception>>(100)
 
@@ -80,11 +83,13 @@ public class GithubActivity : Activity() {
         val cached = cache.get(imageUrl)
         if (cached != null) return cached
 
-        val promise = fuelService.bitmapUrl(imageUrl) then { bitmap ->
-            val scaled = Bitmap.createScaledBitmap(bitmap, dip(50), dip(50), false)
-            bitmap.recycle()
-            scaled
-        }
+        val promise = imageThrottle.task {
+            fuelService.bitmapUrl(imageUrl) then { bitmap ->
+                val scaled = Bitmap.createScaledBitmap(bitmap, dip(50), dip(50), false)
+                bitmap.recycle()
+                scaled
+            }
+        }.unwrap()
         cache.put(imageUrl, promise)
         return promise
     }
