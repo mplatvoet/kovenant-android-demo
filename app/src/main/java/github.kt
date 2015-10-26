@@ -86,7 +86,9 @@ public class GithubActivity : Activity() {
         val promise = imageThrottle.task {
             fuelService.bitmapUrl(imageUrl) then { bitmap ->
                 val scaled = Bitmap.createScaledBitmap(bitmap, dip(50), dip(50), false)
-                bitmap.recycle()
+                //returns the same instance if there is nothing
+                //to resize
+                if (scaled != bitmap) bitmap.recycle()
                 scaled
             }
         }.unwrap()

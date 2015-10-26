@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '0.14.449'
+    ext.kotlin_version = '1.0.0-beta-1038'
     repositories {
         jcenter {
             url "http://jcenter.bintray.com/"
@@ -39,17 +39,18 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:appcompat-v7:23.1.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'org.jetbrains.anko:anko-sdk23:0.7'
+    compile 'org.jetbrains.anko:anko-sdk23:0.7.2'
     compile 'net.sourceforge.argo:argo:3.14'
 
-    compile 'nl.komponents.kovenant:kovenant-android:2.8.0'
-    compile 'nl.komponents.kovenant:kovenant-combine:2.8.0'
-    compile 'nl.komponents.kovenant:kovenant-jvm:2.8.0'
-    compile 'nl.komponents.kovenant:kovenant-functional:2.8.0'
+    compile 'nl.komponents.kovenant:kovenant-core:2.9.0'
+    compile 'nl.komponents.kovenant:kovenant-android:2.9.0'
+    compile 'nl.komponents.kovenant:kovenant-combine:2.9.0'
+    compile 'nl.komponents.kovenant:kovenant-jvm:2.9.0'
+    compile 'nl.komponents.kovenant:kovenant-functional:2.9.0'
 
-    compile 'fuel:fuel:0.55'
+    compile 'fuel:fuel:0.57'
 
-    compile 'uy.kohesive.injekt:injekt-core:1.7.0'
+    compile 'uy.kohesive.injekt:injekt-core:1.8.0'
 }
