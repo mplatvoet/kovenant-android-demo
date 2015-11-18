@@ -2,7 +2,7 @@ package nl.mplatvoet.komponents.kovenant.android.demo
 
 import android.app.Activity
 import android.os.Bundle
-import fuel.core.Manager
+import com.github.kittinunf.fuel.core.Manager
 import nl.komponents.kovenant.Kovenant
 import nl.komponents.kovenant.android.startKovenant
 import nl.komponents.kovenant.android.stopKovenant

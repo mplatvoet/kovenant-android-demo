@@ -12,14 +12,14 @@ class GithubSearchJsonParser {
         val rootNode = parser.parse(text)
 
         val items = ArrayList<Item>()
-        rootNode.getArrayNode("items") forEach {
+        rootNode.getArrayNode("items").forEach {
             val name = it.getStringValue("name")
             val stars = it.getNumberValue("stargazers_count")
             val forks = it.getNumberValue("forks")
             val owner = it.getNode("owner")
             val imageUrl = owner.getStringValue("avatar_url")
 
-            items add Item(name, imageUrl, forks = forks, stars = stars)
+            items.add(Item(name, imageUrl, forks = forks, stars = stars))
         }
         return Result(items)
     }

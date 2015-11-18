@@ -19,5 +19,8 @@ allprojects {
         jcenter {
             url "http://jcenter.bintray.com/"
         }
+        maven {
+            url 'http://oss.sonatype.org/content/repositories/snapshots'
+        }
     }
 }

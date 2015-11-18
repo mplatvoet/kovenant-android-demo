@@ -2,10 +2,10 @@ package nl.mplatvoet.komponents.kovenant.android.demo
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import fuel.Fuel
-import fuel.core.Either
-import fuel.core.Request
-import fuel.core.Response
+import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.core.Either
+import com.github.kittinunf.fuel.core.Request
+import com.github.kittinunf.fuel.core.Response
 import nl.komponents.kovenant.Promise
 import nl.komponents.kovenant.deferred
 import nl.komponents.kovenant.then

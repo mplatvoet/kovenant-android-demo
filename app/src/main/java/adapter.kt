@@ -29,18 +29,18 @@ public class ListAdapter<T, V : View>(private val items: List<T>,
     override fun getCount(): Int = items.size()
 }
 
-private abstract class ObservableAdapter : android.widget.ListAdapter {
+public abstract class ObservableAdapter : android.widget.ListAdapter {
     private val observers = ConcurrentLinkedQueue<DataSetObserver>()
 
     override fun unregisterDataSetObserver(observer: DataSetObserver?) {
-        if (observer != null) observers remove observer
+        if (observer != null) observers.remove(observer)
     }
 
     override fun registerDataSetObserver(observer: DataSetObserver?) {
-        if (observer != null) observers add observer
+        if (observer != null) observers.add(observer)
     }
 
-    protected fun notifyObservers(): Unit = observers forEach {
+    protected fun notifyObservers(): Unit = observers.forEach {
         it.onChanged()
     }
 }

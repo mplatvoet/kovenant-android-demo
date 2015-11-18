@@ -52,7 +52,7 @@ public class GithubActivity : Activity() {
         } failUi {
 
             //If somewhere in the chain something went wrong
-            toast("${it.getMessage()}")
+            toast("${it.message}")
         }
     }
 
