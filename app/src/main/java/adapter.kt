@@ -26,7 +26,7 @@ public class ListAdapter<T, V : View>(private val items: List<T>,
     override fun getViewTypeCount(): Int = 1
     override fun getItemId(position: Int): Long = position.toLong()
     override fun hasStableIds(): Boolean = false
-    override fun getCount(): Int = items.size()
+    override fun getCount(): Int = items.size
 }
 
 public abstract class ObservableAdapter : android.widget.ListAdapter {
