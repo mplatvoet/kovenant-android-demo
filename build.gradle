@@ -22,5 +22,6 @@ allprojects {
         maven {
             url 'http://oss.sonatype.org/content/repositories/snapshots'
         }
+        mavenCentral()
     }
 }
