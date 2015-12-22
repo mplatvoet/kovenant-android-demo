@@ -3,9 +3,9 @@ package nl.mplatvoet.komponents.kovenant.android.demo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import com.github.kittinunf.fuel.Fuel
-import com.github.kittinunf.fuel.core.Either
 import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.core.Response
+import com.github.kittinunf.result.Result
 import nl.komponents.kovenant.Promise
 import nl.komponents.kovenant.deferred
 import nl.komponents.kovenant.then
@@ -30,10 +30,10 @@ public class FuelHttpService {
 
 public fun Request.promise(): Promise<Pair<Response, ByteArray>, Exception> {
     val deferred = deferred<Pair<Response, ByteArray>, Exception>()
-    response { request, response, either ->
-        when (either) {
-            is Either.Left -> deferred.reject(either.get())
-            is Either.Right -> deferred.resolve(Pair(response, either.get()))
+    response { request, response, result ->
+        when (result) {
+            is Result.Failure -> deferred.reject(result.error!!)
+            is Result.Success -> deferred.resolve(Pair(response, result.value!!))
         }
     }
     return deferred.promise
