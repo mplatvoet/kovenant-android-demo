@@ -31,10 +31,6 @@ class MainActivity : Activity() {
         // matters in hand.
         startKovenant()
 
-        //Attach Kovenant's executors to Fuel's executors
-        Manager.instance.executor = Kovenant.context.workerContext.dispatcher.asExecutorService()
-        Manager.instance.callbackExecutor = Kovenant.context.callbackContext.dispatcher.asExecutorService()
-
         verticalLayout {
             padding = dip(32)
 
