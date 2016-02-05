@@ -2,6 +2,7 @@ package nl.mplatvoet.komponents.kovenant.android.demo
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import com.github.kittinunf.fuel.core.Manager
 import nl.komponents.kovenant.Kovenant
 import nl.komponents.kovenant.android.startKovenant
@@ -48,6 +49,7 @@ class MainActivity : Activity() {
         // For quicker shutdown you could use
         // `force=true`, which ignores all current
         // scheduled tasks
+        Log.i("DEBUG", "stopping")
         stopKovenant()
         super.onDestroy()
     }
