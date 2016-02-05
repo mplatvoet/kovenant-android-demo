@@ -10,15 +10,15 @@ import nl.komponents.kovenant.task
 import nl.komponents.kovenant.then
 import java.io.ByteArrayInputStream
 
-public class FuelHttpService {
-    public fun textUrl(url: String, parameters: List<Pair<String, Any?>>? = null): Promise<String, Exception> {
+class FuelHttpService {
+    fun textUrl(url: String, parameters: List<Pair<String, Any?>>? = null): Promise<String, Exception> {
         return Fuel.get(url, parameters).promise() then {
             val (request, response, bytes) = it
-            String(bytes, response.contentTypeEncoding)
+            String(bytes, charset(response.contentTypeEncoding))
         }
     }
 
-    public fun bitmapUrl(url: String): Promise<Bitmap, Exception> {
+    fun bitmapUrl(url: String): Promise<Bitmap, Exception> {
         return Fuel.get(url).promise() then {
             BitmapFactory.decodeStream(ByteArrayInputStream(it.third))
         }
@@ -26,14 +26,14 @@ public class FuelHttpService {
 }
 
 
-public fun Request.promise(): Promise<Triple<Request, Response, ByteArray>, Exception> = task {
+fun Request.promise(): Promise<Triple<Request, Response, ByteArray>, Exception> = task {
     response()
 }
 
-public val Response.contentTypeEncoding: String
+val Response.contentTypeEncoding: String
     get() = contentTypeEncoding()
 
-public fun Response.contentTypeEncoding(default: String = "utf-8"): String {
+fun Response.contentTypeEncoding(default: String = "utf-8"): String {
     val contentType: String = httpResponseHeaders["Content-Type"]?.first() ?: return default
     return contentType.substringAfterLast("charset=", default).substringAfter(' ', default)
 }
