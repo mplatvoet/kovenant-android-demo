@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.Adapter
 import java.util.concurrent.ConcurrentLinkedQueue
 
-public class ListAdapter<T, V : View>(private val items: List<T>,
+class ListAdapter<T, V : View>(private val items: List<T>,
                                       private val viewFactory: (parent: ViewGroup) -> V,
                                       private val viewPopulator: (view: V, id: Int, item: T) -> Unit) : ObservableAdapter() {
 
@@ -29,7 +29,7 @@ public class ListAdapter<T, V : View>(private val items: List<T>,
     override fun getCount(): Int = items.size
 }
 
-public abstract class ObservableAdapter : android.widget.ListAdapter {
+abstract class ObservableAdapter : android.widget.ListAdapter {
     private val observers = ConcurrentLinkedQueue<DataSetObserver>()
 
     override fun unregisterDataSetObserver(observer: DataSetObserver?) {

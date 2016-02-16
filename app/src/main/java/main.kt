@@ -2,11 +2,8 @@ package nl.mplatvoet.komponents.kovenant.android.demo
 
 import android.app.Activity
 import android.os.Bundle
-import com.github.kittinunf.fuel.core.Manager
-import nl.komponents.kovenant.Kovenant
 import nl.komponents.kovenant.android.startKovenant
 import nl.komponents.kovenant.android.stopKovenant
-import nl.komponents.kovenant.jvm.asExecutorService
 import org.jetbrains.anko.*
 import uy.kohesive.injekt.InjektMain
 import uy.kohesive.injekt.api.InjektRegistrar

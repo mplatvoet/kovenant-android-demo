@@ -8,7 +8,7 @@ class GithubSearchJsonParser {
         val parser = JdomParser()
     }
 
-    public fun parse(text: String): Result {
+    fun parse(text: String): Result {
         val rootNode = parser.parse(text)
 
         val items = ArrayList<Item>()

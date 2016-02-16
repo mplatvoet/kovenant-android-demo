@@ -24,7 +24,7 @@ import uy.kohesive.injekt.injectLazy
 val url = "https://api.github.com/search/repositories"
 
 
-public class GithubActivity : Activity() {
+class GithubActivity : Activity() {
     val searchParser: GithubSearchJsonParser by injectLazy()
     val fuelService: FuelHttpService by injectLazy()
     val imageThrottle = Throttle()
