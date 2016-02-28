@@ -39,18 +39,18 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.2.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile 'org.jetbrains.anko:anko-sdk23:0.8.2'
     compile 'net.sourceforge.argo:argo:3.14'
 
-    compile 'nl.komponents.kovenant:kovenant-core:3.0.0'
-    compile 'nl.komponents.kovenant:kovenant-android:3.0.0'
-    compile 'nl.komponents.kovenant:kovenant-combine:3.0.0'
-    compile 'nl.komponents.kovenant:kovenant-jvm:3.0.0'
-    compile 'nl.komponents.kovenant:kovenant-functional:3.0.0'
+    compile 'nl.komponents.kovenant:kovenant-core:3.1.0'
+    compile 'nl.komponents.kovenant:kovenant-android:3.1.0'
+    compile 'nl.komponents.kovenant:kovenant-combine:3.1.0'
+    compile 'nl.komponents.kovenant:kovenant-jvm:3.1.0'
+    compile 'nl.komponents.kovenant:kovenant-functional:3.1.0'
 
-    compile 'com.github.kittinunf.fuel:fuel:1.0.0'
+    compile 'com.github.kittinunf.fuel:fuel:1.1.0'
 
-    compile 'uy.kohesive.injekt:injekt-core:1.14.0'
+    compile 'uy.kohesive.injekt:injekt-core:1.14.1'
 }
