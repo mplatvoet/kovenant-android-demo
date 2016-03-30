@@ -44,11 +44,11 @@ dependencies {
     compile 'org.jetbrains.anko:anko-sdk23:0.8.2'
     compile 'net.sourceforge.argo:argo:3.14'
 
-    compile 'nl.komponents.kovenant:kovenant-core:3.2.1'
-    compile 'nl.komponents.kovenant:kovenant-android:3.2.1'
-    compile 'nl.komponents.kovenant:kovenant-combine:3.2.1'
-    compile 'nl.komponents.kovenant:kovenant-jvm:3.2.1'
-    compile 'nl.komponents.kovenant:kovenant-functional:3.2.1'
+    compile 'nl.komponents.kovenant:kovenant-core:3.2.2'
+    compile 'nl.komponents.kovenant:kovenant-android:3.2.2'
+    compile 'nl.komponents.kovenant:kovenant-combine:3.2.2'
+    compile 'nl.komponents.kovenant:kovenant-jvm:3.2.2'
+    compile 'nl.komponents.kovenant:kovenant-functional:3.2.2'
 
     compile 'com.github.kittinunf.fuel:fuel:1.1.3'
 
