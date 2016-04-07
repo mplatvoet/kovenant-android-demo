@@ -3,9 +3,12 @@ package nl.mplatvoet.komponents.kovenant.android.demo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.core.Response
+import com.github.kittinunf.result.Result
 import nl.komponents.kovenant.Promise
+import nl.komponents.kovenant.deferred
 import nl.komponents.kovenant.task
 import nl.komponents.kovenant.then
 import java.io.ByteArrayInputStream
@@ -27,8 +30,18 @@ class FuelHttpService {
 }
 
 
-fun Request.promise(): Promise<Triple<Request, Response, ByteArray>, Exception> = task {
-    response()
+fun Request.promise(): Promise<Triple<Request, Response, ByteArray>, Exception> {
+    val deferred = deferred<Triple<Request, Response, ByteArray>, Exception>()
+    task { response() } success {
+        val (request, response, result) = it
+        when(result) {
+            is Result.Success -> deferred.resolve(Triple(request, response, result.value))
+            is Result.Failure -> deferred.reject(result.error)
+        }
+    } fail {
+        deferred.reject(it)
+    }
+    return deferred.promise
 }
 
 val Response.contentTypeEncoding: String
