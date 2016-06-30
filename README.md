@@ -12,5 +12,5 @@ Also uses:
 - [Injekt](https://github.com/kohesive/injekt)
 
 
-Demo version uses Kovenant 3.2.2
+Demo version uses Kovenant 3.3.0
 

@@ -17,6 +17,7 @@ class DemoApplication : Application() {
             addSingleton(GithubSearchJsonParser())
             addSingleton(FuelHttpService())
         }
+
     }
 
     override fun onCreate() {
